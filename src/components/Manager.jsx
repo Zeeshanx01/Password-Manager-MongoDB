@@ -11,6 +11,9 @@ const Manager = () => {
   const [form, setform] = useState({ site: '', username: '', password: '' })
   const [passwordArray, setPasswordArray] = useState([])
 
+
+
+
   const getPassword = async () => {
     let req = await fetch("http://localhost:3000/")
     let passwords = await req.json();
@@ -66,13 +69,14 @@ const Manager = () => {
 
 
   const savePassword = async () => {
-    if (form.site.length > 1 && form.username.length > 1 && form.password.length > 1) {
-      // alert("Saved")
-      // console.log(form)
 
+    
+    if (form.site.length > 1 && form.username.length > 1 && form.password.length > 1) {
+      
+      
       //* simulating update api:
       //? Deleting if the id already exist
-      await fetch("http://localhost:3000/", { method: "DELETE", headers: { "Content-type": "application.json" }, body: JSON.stringify({ id: form.id }) })
+      // await fetch("http://localhost:3000/", { method: "DELETE", headers: { "Content-type": "application.json" }, body: JSON.stringify({ id: form.id }) })
 
 
       setPasswordArray([...passwordArray, { ...form, id: uuidv4() }])
@@ -82,18 +86,15 @@ const Manager = () => {
       // localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...form, id: uuidv4() }]))
       // console.log([...passwordArray, form])
 
-      setform({ site: '', username: '', password: '' })
-      // toast('Saved', {
-      //   position: "bottom-right",
-      //   autoClose: 2000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "light"
-      // });
+
     }
+
+    else{
+      console.log('zzzzzzzzzzzzzzzzzz')
+    }
+
+
+    console.log(passwordArray)
   }
 
 
@@ -118,8 +119,8 @@ const Manager = () => {
 
   }
   const editPassword = (id) => {
-    setform({ ...passwordArray.filter(i => i.id === id)[0], id: id })
     // setPasswordArray({ ...passwordArray.filter(item => item.id !== id)[0], id: id })
+    setform({ ...passwordArray.filter(i => i.id === id)[0], id: id })
     setPasswordArray(passwordArray.filter(item => item.id !== id))
 
   }
@@ -184,8 +185,8 @@ const Manager = () => {
           </div>
 
           <div className='bg-slate-3000 w-full flex justify-end'>
-
-            <button onClick={savePassword} disabled={form.site.length < 1} disabled={form.username.length < 1} disabled={form.password.length < 1} className='disabled:opacity-30 flex justify-center items-center bg-green-500 rounded-full  px-6 py-1 mx-auto0 text-xs font-bold hover:bg-green-400 gap-2'><lord-icon src="https://cdn.lordicon.com/jgnvfzqg.json" trigger="loop" colors="primary:#000000"></lord-icon>Save Password</button>
+            {/* disabled={form.site.length < 1} disabled={form.username.length < 1} disabled={form.password.length < 1} */}
+            <button onClick={savePassword} className='disabled:opacity-30 flex justify-center items-center bg-green-500 rounded-full  px-6 py-1 mx-auto0 text-xs font-bold hover:bg-green-400 gap-2'><lord-icon src="https://cdn.lordicon.com/jgnvfzqg.json" trigger="loop" colors="primary:#000000"></lord-icon>Save Password</button>
 
           </div>
 
