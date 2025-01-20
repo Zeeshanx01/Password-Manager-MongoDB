@@ -356,7 +356,7 @@ const Manager = () => {
 
                   <div className="flex justify-center items-center">
 
-                    <span className='overflow-hidden max-sm:w-16 max-md:w-40 md:w-40 lg:w-60'>{item.password}</span>
+                    <span className='overflow-hidden max-sm:w-16 max-md:w-40 md:w-40 lg:w-60'>{"*".repeat(item.password.length)}</span>
 
                     <div className='cursor-pointer' onClick={() => { copyText(item.password) }}>
                       <lord-icon
