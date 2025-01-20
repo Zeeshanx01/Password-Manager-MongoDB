@@ -15,7 +15,7 @@ const Manager = () => {
 
 
   const getPassword = async () => {
-    let req = await fetch("http://localhost:3000/")
+    let req = await fetch(process.env.NEXT_PUBLIC_HOST)
     let passwords = await req.json();
     console.log(passwords)
     setPasswordArray(passwords)
@@ -76,13 +76,13 @@ const Manager = () => {
 
       //* simulating update api:
       //? Deleting if the id already exist
-      // await fetch("http://localhost:3000/", { method: "DELETE", headers: { "Content-type": "application.json" }, body: JSON.stringify({ id: form.id }) })
+      // await fetch(process.env.NEXT_PUBLIC_HOST, { method: "DELETE", headers: { "Content-type": "application.json" }, body: JSON.stringify({ id: form.id }) })
 
 
       setPasswordArray([...passwordArray, { ...form, id: uuidv4() }])
 
       console.log('Saving Password: ', form)
-      await fetch("http://localhost:3000/", {
+      await fetch(process.env.NEXT_PUBLIC_HOST, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ ...form, id: uuidv4() })
@@ -104,7 +104,7 @@ const Manager = () => {
 
   const deleteP = async (id) => {
     setPasswordArray(passwordArray.filter(item => item.id !== id))
-    let res = await fetch("http://localhost:3000/", { method: "DELETE", headers: { "Content-type": "application/json" }, body: JSON.stringify({ id }) })
+    let res = await fetch(process.env.NEXT_PUBLIC_HOST, { method: "DELETE", headers: { "Content-type": "application/json" }, body: JSON.stringify({ id }) })
     // localStorage.setItem("passwords", JSON.stringify(passwordArray.filter(item => item.id !== id)))
 
   }
