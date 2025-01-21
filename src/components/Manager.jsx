@@ -15,7 +15,7 @@ const Manager = () => {
 
 
   const getPassword = async () => {
-    let req = await fetch(process.env.NEXT_PUBLIC_HOST)
+    let req = await fetch(import.meta.env.VITE_APP_HOST)
     let passwords = await req.json();
     console.log(passwords)
     setPasswordArray(passwords)
@@ -76,23 +76,27 @@ const Manager = () => {
 
       //* simulating update api:
       //? Deleting if the id already exist
-      // await fetch(process.env.NEXT_PUBLIC_HOST, { method: "DELETE", headers: { "Content-type": "application.json" }, body: JSON.stringify({ id: form.id }) })
+      // await fetch(import.meta.env.VITE_APP_HOST, { method: "DELETE", headers: { "Content-type": "application.json" }, body: JSON.stringify({ id: form.id }) })
 
 
       setPasswordArray([...passwordArray, { ...form, id: uuidv4() }])
 
       console.log('Saving Password: ', form)
-      await fetch(process.env.NEXT_PUBLIC_HOST, {
+      await fetch(import.meta.env.VITE_APP_HOST, {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ ...form, id: uuidv4() })
       })
       setform({ site: '', username: '', password: '' })
-      // const responseData = await response.json();
-      // console.log('Server Response: ', responseData);
-
-      // localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...form, id: uuidv4() }]))
-      // console.log([...passwordArray, form])
+      toast('Password Saved', {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "light"
+      });
 
     } else {
       console.log('Form validation failed')
@@ -104,7 +108,7 @@ const Manager = () => {
 
   const deleteP = async (id) => {
     setPasswordArray(passwordArray.filter(item => item.id !== id))
-    let res = await fetch(process.env.NEXT_PUBLIC_HOST, { method: "DELETE", headers: { "Content-type": "application/json" }, body: JSON.stringify({ id }) })
+    let res = await fetch(import.meta.env.VITE_APP_HOST, { method: "DELETE", headers: { "Content-type": "application/json" }, body: JSON.stringify({ id }) })
     // localStorage.setItem("passwords", JSON.stringify(passwordArray.filter(item => item.id !== id)))
 
   }
