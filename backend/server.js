@@ -12,17 +12,23 @@ dotenv.config()
 
 // Connection URL
 const url = process.env.MONGODB_URI;
-const client = new MongoClient(url);
+const client = new MongoClient(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  tls: true,
+  tlsAllowInvalidCertificates: true // Add this line to allow invalid certificates if necessary
+});
 
 // Database Name
 const dbName = 'passop';
 const app = express()
-const port = 3000
-const hostname = '127.0.0.1';
+const port = process.env.PORT || 3000
+const hostname = '0.0.0.0'; // Allow connections from any IP
 app.use(bodyParser.json())
 app.use(cors())
 
-client.connect()
+client.connect().then(() => {
+  console.log('Connected to MongoDB');
 
 
 //* route handlers:
@@ -57,8 +63,11 @@ app.delete('/', async (req, res) => {
 })
 
 app.listen(port, hostname, () => {
-  console.log(`Example app listening on port http://${hostname}:${port}/`)
-})
+  console.log(`Example app listening on port http://${hostname}:${port}/`);
+});
+}).catch(err => {
+console.error('Failed to connect to MongoDB', err);
+});
 
 
 
